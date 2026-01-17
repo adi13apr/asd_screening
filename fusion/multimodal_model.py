@@ -7,15 +7,15 @@ class ASDMultimodalModel(nn.Module):
     def __init__(self):
         super().__init__()
         self.fc = nn.Sequential(
-            nn.Linear(34, 16),
-            nn.BatchNorm1d(16),
+            nn.Linear(546, 128),
+            nn.LayerNorm(128),
             nn.ReLU(),
-            nn.Linear(16, 1),
+            nn.Linear(128, 1),
             nn.Sigmoid()
         )
 
-    def forward(self, blink, gesture, eeg):
+    def forward(self, blink, gesture, eeg,image):
         if eeg.dim() == 3:
             eeg = eeg.mean(dim=-1)
-        x = torch.cat([blink, gesture, eeg], dim=1)
+        x = torch.cat([blink, gesture, eeg,image], dim=1)
         return self.fc(x)
