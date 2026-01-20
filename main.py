@@ -3,7 +3,7 @@ from vision.blink_detection import get_blink_features
 from vision.gesture_detection import get_gesture_features
 from eeg.eeg_model import extract_eeg_features
 from fusion.multimodal_model import ASDMultimodalModel
-from vision.image_inference import extract_image_features
+from vision.cnn_inference import extract_image_features
 
 image = extract_image_features("data/user_image.jpg").float()
 blink =torch.tensor(get_blink_features(show=True,duration=15)).float().unsqueeze(0)
