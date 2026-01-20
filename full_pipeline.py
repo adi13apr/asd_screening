@@ -9,7 +9,7 @@ def run_full_screening():
     print("\n=== ASD Screening Started ===\n")
 
     # 1️⃣ EEG (CSV upload)
-    eeg_csv = input("Enter path to EEG CSV file: ")
+    eeg_csv = "data/sample_eeg.csv"
     eeg_output = run_eeg_screening(eeg_csv)
 
     # 2️⃣ Face Image (runtime snapshot)

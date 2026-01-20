@@ -1,3 +1,4 @@
+import json
 from fusion.fusion_logic import compute_fused_risk
 from fusion.fusion_flag import fusion_clinical_flag
 
@@ -5,7 +6,8 @@ def run_asd_fusion(
     eeg_output,
     visual_attention_output,
     gesture_output,
-    face_output
+    face_output,
+    save_path="outputs/fusion_output.json"
 ):
     scores = {
         "eeg": eeg_output["risk_score"],
@@ -17,7 +19,8 @@ def run_asd_fusion(
     fused_score = compute_fused_risk(scores)
     recommendation, level = fusion_clinical_flag(fused_score)
 
-    return {
+
+    final_output= {
         "asd_risk_score": fused_score,
         "risk_level": level,
         "evidence_summary": {
@@ -28,3 +31,7 @@ def run_asd_fusion(
         },
         "clinical_recommendation": recommendation
     }
+    with open(save_path, "w") as f:
+        json.dump(final_output, f, indent=2)
+    
+    return final_output
