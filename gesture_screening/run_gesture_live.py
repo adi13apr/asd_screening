@@ -1,4 +1,4 @@
-from gesture_module import run_gesture_screening
+from gesture_screening.gesture_module import run_gesture_screening
 
 if __name__ == "__main__":
     print("Running gesture screening (10 seconds)...")

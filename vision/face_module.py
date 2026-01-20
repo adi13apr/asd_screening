@@ -1,9 +1,9 @@
 import cv2
-from face_utils import detect_face
-from cnn_inference import load_model, predict_face
-from face_risk import compute_face_risk
-from face_flag import face_clinical_flag
-from image_encoder_arch import get_image_encoder
+from vision.face_utils import detect_face
+from vision.cnn_inference import load_model, predict_face
+from vision.face_risk import compute_face_risk
+from vision.face_flag import face_clinical_flag
+from vision.image_encoder_arch import get_image_encoder
 MODEL_PATH = "models/image_encoder.pt"
 
 model = get_image_encoder()

@@ -1,6 +1,6 @@
 import cv2
 import time
-from head_pose import estimate_head_pose
+from visual_attention.head_pose import estimate_head_pose
 
 def compute_behavior_metrics(duration_sec=10):
     cap = cv2.VideoCapture(0)

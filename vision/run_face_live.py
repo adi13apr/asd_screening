@@ -1,5 +1,5 @@
-from capture_face import capture_face_snapshot
-from face_module import run_face_screening
+from vision.capture_face import capture_face_snapshot
+from vision.face_module import run_face_screening
 
 if __name__ == "__main__":
     img_path = capture_face_snapshot()

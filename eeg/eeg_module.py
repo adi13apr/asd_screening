@@ -1,7 +1,7 @@
-from eeg_loader import load_eeg
-from eeg_features import extract_eeg_features
-from eeg_risk import compute_eeg_risk
-from eeg_flag import eeg_clinical_flag
+from eeg.eeg_loader import load_eeg
+from eeg.eeg_features import extract_eeg_features
+from eeg.eeg_risk import compute_eeg_risk
+from eeg.eeg_flag import eeg_clinical_flag
 
 def run_eeg_screening(csv_path):
     df = load_eeg(csv_path)

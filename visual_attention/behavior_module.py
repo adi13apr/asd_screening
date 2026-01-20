@@ -1,6 +1,6 @@
-from attention_metrics import compute_behavior_metrics
-from behavior_risk import compute_behavior_risk
-from behavior_flag import behavior_clinical_flag
+from visual_attention.attention_metrics import compute_behavior_metrics
+from visual_attention.behavior_risk import compute_behavior_risk
+from visual_attention.behavior_flag import behavior_clinical_flag
 
 def run_behavior_screening(duration_sec=10):
     metrics = compute_behavior_metrics(duration_sec)

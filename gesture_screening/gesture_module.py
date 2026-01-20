@@ -1,6 +1,6 @@
-from gesture_metrics import compute_gesture_metrics
-from gesture_risk import compute_gesture_risk
-from gesture_flag import gesture_clinical_flag
+from gesture_screening.gesture_metrics import compute_gesture_metrics
+from gesture_screening.gesture_risk import compute_gesture_risk
+from gesture_screening.gesture_flag import gesture_clinical_flag
 
 def run_gesture_screening(duration_sec=10):
     metrics = compute_gesture_metrics(duration_sec)

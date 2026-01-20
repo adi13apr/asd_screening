@@ -1,7 +1,7 @@
 import cv2
 import time
 import numpy as np
-from gesture_utils import preprocess_frame, frame_motion
+from gesture_screening.gesture_utils import preprocess_frame, frame_motion
 
 def compute_gesture_metrics(duration_sec=10):
     cap = cv2.VideoCapture(0)
