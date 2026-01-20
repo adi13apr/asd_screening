@@ -68,7 +68,7 @@ def extract_eeg_features(csv_path):
     data = df.values.astype(np.float32)
 
     eeg = torch.tensor(data).T               # (channels, time)
-    eeg = normalize_eeg(eeg)
+    eeg = normalize_eeg(eeg)                
     windows = window_eeg(eeg)                # (N, channels, time)
 
     windows = windows.to(DEVICE)
