@@ -31,8 +31,8 @@ def run_face_screening(image_path):
 
     return {
         "raw_measurements": {
-            "cnn_probability": cnn_prob,
-            "face_detection_confidence": face_conf
+            "cnn_probability": float(cnn_prob),
+            "face_detection_confidence": float(face_conf)
         },
         "risk_score": risk,
         "clinical_flag": flag

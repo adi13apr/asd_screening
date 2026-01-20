@@ -16,6 +16,6 @@ def detect_face(image):
 
     face_area = w * h
     img_area = image.shape[0] * image.shape[1]
-    confidence = round(face_area / img_area, 2)
+    confidence = float(round(face_area / img_area, 2))
 
     return face_img, confidence
