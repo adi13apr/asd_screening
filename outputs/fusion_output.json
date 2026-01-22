@@ -1,11 +1,11 @@
 {
-  "asd_risk_score": 0.44,
-  "risk_level": "Moderate",
+  "asd_risk_score": 0.83,
+  "risk_level": "Elevated",
   "evidence_summary": {
     "eeg": "Atypical frontal and temporal neural signal patterns observed during EEG screening",
-    "visual_attention": "Mild reduction in sustained visual attention patterns",
-    "gesture": "Motor gesture patterns within expected screening range",
+    "visual_attention": "Reduced visual attention / joint attention patterns detected",
+    "gesture": "Elevated repetitive motor movement detected",
     "face": "Facial attention patterns within expected screening range"
   },
-  "clinical_recommendation": "Moderate screening risk with converging behavioral and neural signals. Clinical monitoring and follow-up recommended."
+  "clinical_recommendation": "Elevated multimodal screening risk observed. Recommend comprehensive clinical evaluation and developmental assessment."
 }

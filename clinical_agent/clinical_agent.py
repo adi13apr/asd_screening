@@ -5,7 +5,7 @@ from langchain_ollama import OllamaLLM
 
 
 # Lightweight, CPU-friendly model
-llm = OllamaLLM(model="phi3:mini")
+llm = OllamaLLM(model="qwen2.5:3b-instruct")
 
 
 def generate_clinical_explanation_from_file(

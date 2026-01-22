@@ -1,0 +1,163 @@
+# =========================
+# Python Bytecode / Cache
+# =========================
+__pycache__/
+*.py[cod]
+*$py.class
+
+# =========================
+# Virtual Environments
+# =========================
+venv/*
+venv/
+.env/
+ENV/
+
+# =========================
+# Environment / Secrets
+# =========================
+.env
+.env.*
+*.env
+
+# =========================
+# VS Code / IDE
+# =========================
+.vscode/
+.idea/
+*.swp
+
+# =========================
+# OS Files
+# =========================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# =========================
+# Logs
+# =========================
+*.log
+
+# =========================
+# Model Weights / Large Binaries
+# =========================
+models/*.pt
+models/*.pth
+models/*.onnx
+models/*.dat
+*.pt
+*.pth
+*.onnx
+*.dat
+
+# =========================
+# Runtime Temp Files
+# =========================
+# tmp/
+# tmp_*/
+# tmp_eeg/
+
+# =========================
+# Generated Media (runtime)
+# =========================
+runtime_media/
+uploads/
+downloads/
+
+# =========================
+# Output Artifacts (Generated)
+# =========================
+outputs/
+fusion_outputs/
+*.pred.json
+
+# =========================
+# Clinical Agent Vector Stores
+# =========================
+clinical_agent/vector_store/
+clinical_agent/knowledge_base/
+clinical_agent/chroma/
+
+# =========================
+# PyTorch / HuggingFace Cache
+# =========================
+.cache/
+torch_cache/
+huggingface/
+hf_cache/
+
+# =========================
+# Jupyter
+# =========================
+.ipynb_checkpoints/
+
+# =========================
+# Build / Distribution
+# =========================
+build/
+dist/
+*.egg-info/
+
+# =========================
+# Large Media Files (OPTIONAL)
+# =========================
+# Uncomment if you NEVER want to commit media
+# *.mp4
+# *.avi
+# *.mov
+# *.wav
+# *.jpg
+# *.jpeg
+# *.png
+# *.csv
+
+# =========================
+# Supabase / API
+# =========================
+client/secrets.py
+client/keys.py
+
+# =========================
+# Node / Frontend (if any)
+# =========================
+node_modules/
+.next/
+out/
+
+
+
+# =========================
+# Python Cache Anywhere
+# =========================
+**/__pycache__/
+**/*.pyc
+
+# =========================
+# Temp Data Folders (Your Project)
+# =========================
+tmp/
+tmp_*/
+tmp_eeg/
+data/
+
+# =========================
+# Runtime Media
+# =========================
+*.jpg
+*.jpeg
+*.png
+*.mp4
+*.avi
+*.mov
+
+# =========================
+# EEG / CSV Runtime
+# =========================
+*.csv
+
+# =========================
+# PDFs / Datasets
+# =========================
+*.pdf
+*.bz2

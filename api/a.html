@@ -1,0 +1,28 @@
+<form id="eegForm">
+  <label>Upload EEG CSV File:</label><br>
+  <input type="file" id="eegFile" accept=".csv" required />
+  <br><br>
+  <button type="submit">Run EEG Screening</button>
+</form>
+
+<pre id="result"></pre>
+
+<script>
+document.getElementById("eegForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const fileInput = document.getElementById("eegFile");
+  const file = fileInput.files[0];
+
+  const formData = new FormData();
+  formData.append("eeg_file", file);
+
+  const response = await fetch("http://127.0.0.1:8000/upload_eeg", {
+    method: "POST",
+    body: formData
+  });
+
+  const data = await response.json();
+  document.getElementById("result").textContent = JSON.stringify(data, null, 2);
+});
+</script>

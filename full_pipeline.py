@@ -3,29 +3,34 @@ from vision.face_module import run_face_screening
 from visual_attention.behavior_module import run_behavior_screening
 from gesture_screening.gesture_module import run_gesture_screening
 from fusion.fusion_module import run_asd_fusion
-from vision.capture_face import capture_face_snapshot
 
-def run_full_screening():
-    print("\n=== ASD Screening Started ===\n")
 
-    # 1️⃣ EEG (CSV upload)
-    eeg_csv = "data/sample_eeg.csv"
-    eeg_output = run_eeg_screening(eeg_csv)
+def run_full_screening_from_files(
+    eeg_csv_path: str,
+    face_image_path: str,
+    video_path: str
+):
+    print("\n=== ASD Screening (API) Started ===\n")
 
-    # 2️⃣ Face Image (runtime snapshot)
-    print("\nCapturing face image...")
-    face_image_path = capture_face_snapshot()
+    print(">>> EEG START")
+    eeg_output = run_eeg_screening(eeg_csv_path)
+    print(">>> EEG DONE")
+
+    print(">>> FACE START")
     face_output = run_face_screening(face_image_path)
+    print(">>> FACE DONE")
 
-    # 3️⃣ Visual Attention & Eye Gaze (runtime video)
-    print("\nRunning visual attention screening...")
-    visual_attention_output = run_behavior_screening(duration_sec=10)
+    print(">>> VISUAL START")
+    visual_attention_output = run_behavior_screening(video_path=video_path)
+    print(">>> VISUAL DONE")
 
-    # 4️⃣ Gesture / Motor Behavior (runtime video)
-    print("\nRunning gesture screening...")
-    gesture_output = run_gesture_screening(duration_sec=10)
+    print(">>> GESTURE START")
+    gesture_output = run_gesture_screening(video_path=video_path)
+    print(">>> GESTURE DONE")
 
-    # 5️⃣ Multimodal Fusion (REAL values)
+    print(">>> FUSION START")
+
+    # 5️⃣ Fusion
     final_output = run_asd_fusion(
         eeg_output=eeg_output,
         visual_attention_output=visual_attention_output,
@@ -33,11 +38,7 @@ def run_full_screening():
         face_output=face_output
     )
 
-    print("\n=== FINAL ASD SCREENING RESULT ===\n")
+    print("\n=== FINAL ASD SCREENING RESULT (API) ===\n")
     print(final_output)
 
     return final_output
-
-
-if __name__ == "__main__":
-    run_full_screening()
