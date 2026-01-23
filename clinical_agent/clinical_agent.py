@@ -1,11 +1,21 @@
+import os
 import json
+
 from clinical_agent.retriever import retrieve_evidence
 from clinical_agent.prompt_template import CLINICAL_PROMPT
-from langchain_ollama import OllamaLLM
+
+from langchain_groq import ChatGroq
+from langchain_core.messages import HumanMessage
 
 
-# Lightweight, CPU-friendly model
-llm = OllamaLLM(model="qwen2.5:3b-instruct")
+# -----------------------------
+# FREE Hosted LLM via Groq
+# -----------------------------
+llm = ChatGroq(
+    model="llama-3.1-8b-instant",   # FREE, strong, fast
+    api_key=os.getenv("GROQ_API_KEY"),
+    temperature=0.2
+)
 
 
 def generate_clinical_explanation_from_file(
@@ -50,13 +60,17 @@ def generate_clinical_explanation_from_file(
         evidence=evidence_text
     )
 
-    response = llm.invoke(prompt)
+    # -----------------------------
+    # Groq invocation (LangChain)
+    # -----------------------------
+    response = llm.invoke([HumanMessage(content=prompt)])
 
     return {
         "asd_risk_score": fusion_output["asd_risk_score"],
         "risk_level": fusion_output["risk_level"],
-        "clinical_support_explanation": response,
+        "clinical_support_explanation": response.content,
         "sources_cited": sorted(list(citations)),
+        "model_used": "groq/llama-3.1-8b-instant",
         "disclaimer": (
             "This output provides screening-level clinical decision support only "
             "and does not constitute a medical diagnosis."

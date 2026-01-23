@@ -1,12 +1,30 @@
+from dotenv import load_dotenv
+load_dotenv()
+
 from fastapi import FastAPI, HTTPException
 import os
 
 from client.supabase_client import supabaseClient
-
 from full_pipeline import run_full_screening_from_files
 from clinical_agent.clinical_agent import generate_clinical_explanation_from_file
 
+
+# -----------------------------
+# Startup validation
+# -----------------------------
+if not os.getenv("GROQ_API_KEY"):
+    raise RuntimeError("GROQ_API_KEY is not set. Check your .env or deployment secrets.")
+
+if not os.getenv("SUPABASE_URL"):
+    raise RuntimeError("SUPABASE_URL is not set.")
+
+if not os.getenv("SUPABASE_KEY"):
+    raise RuntimeError("SUPABASE_KEY is not set.")
+
+
 app = FastAPI()
+
+
 @app.get("/")
 def root():
     return {
@@ -23,15 +41,14 @@ def health_check():
 
 @app.post("/eeg")
 def run_eeg_from_supabase(payload: dict):
-    # user_id = payload.get("user_id")
     file_key = payload.get("file_key")      # EEG CSV
     image_key = payload.get("image_key")    # Face image
     video_key = payload.get("video_key")    # 10s video
 
-    if  not file_key or not image_key or not video_key:
+    if not file_key or not image_key or not video_key:
         raise HTTPException(
             status_code=400,
-            detail="user_id, file_key, image_key, and video_key are required"
+            detail="file_key, image_key, and video_key are required"
         )
 
     try:
@@ -64,13 +81,24 @@ def run_eeg_from_supabase(payload: dict):
         video_bytes = get_bytes(video_result)
 
         # -----------------------------
+        # Free-tier size guard
+        # -----------------------------
+        MAX_VIDEO_MB = 50
+        if len(video_bytes) > MAX_VIDEO_MB * 1024 * 1024:
+            raise HTTPException(
+                status_code=413,
+                detail="Uploaded video is too large for free tier processing"
+            )
+
+        # -----------------------------
         # Save locally
         # -----------------------------
-        os.makedirs("tmp", exist_ok=True)
+        TMP_DIR = os.getenv("TMP_DIR", "tmp")
+        os.makedirs(TMP_DIR, exist_ok=True)
 
-        eeg_path = os.path.join("tmp", os.path.basename(file_key))
-        image_path = os.path.join("tmp", os.path.basename(image_key))
-        video_path = os.path.join("tmp", os.path.basename(video_key))
+        eeg_path = os.path.join(TMP_DIR, os.path.basename(file_key))
+        image_path = os.path.join(TMP_DIR, os.path.basename(image_key))
+        video_path = os.path.join(TMP_DIR, os.path.basename(video_key))
 
         with open(eeg_path, "wb") as f:
             f.write(eeg_bytes)
@@ -91,15 +119,12 @@ def run_eeg_from_supabase(payload: dict):
         )
 
         # -----------------------------
-        # Run Clinical Support Agent
+        # Run Clinical Support Agent (Groq)
         # -----------------------------
         clinical_explanation = generate_clinical_explanation_from_file(
             fusion_output_path="outputs/fusion_output.json"
         )
 
-        # -----------------------------
-        # Final API Response
-        # -----------------------------
         return {
             "status": "success",
             "screening_and_fusion_output": fusion_output,

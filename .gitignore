@@ -68,8 +68,7 @@ downloads/
 # =========================
 # Output Artifacts (Generated)
 # =========================
-outputs/
-fusion_outputs/
+
 *.pred.json
 
 # =========================
