@@ -4,25 +4,30 @@ load_dotenv()
 from fastapi import FastAPI, HTTPException
 import os
 
-from client.supabase_client import supabaseClient
+from client.supabase_client import get_supabase_client
 from full_pipeline import run_full_screening_from_files
 from clinical_agent.clinical_agent import generate_clinical_explanation_from_file
 
 
-# -----------------------------
-# Startup validation
-# -----------------------------
-if not os.getenv("GROQ_API_KEY"):
-    raise RuntimeError("GROQ_API_KEY is not set. Check your .env or deployment secrets.")
-
-if not os.getenv("SUPABASE_URL"):
-    raise RuntimeError("SUPABASE_URL is not set.")
-
-if not os.getenv("SUPABASE_KEY"):
-    raise RuntimeError("SUPABASE_KEY is not set.")
-
-
 app = FastAPI()
+
+# Will be initialized during startup
+supabaseClient = None
+
+
+@app.on_event("startup")
+async def startup_event():
+    """Validate required env vars and initialize clients at application startup.
+
+    Doing this during startup avoids import-time failures on serverless platforms
+    where deployment secrets may not be available at module import time.
+    """
+    if not os.getenv("GROQ_API_KEY"):
+        raise RuntimeError("GROQ_API_KEY is not set. Check your .env or deployment secrets.")
+
+    # Initialize Supabase client (will raise if SUPABASE_URL / SUPABASE_KEY missing)
+    global supabaseClient
+    supabaseClient = get_supabase_client()
 
 
 @app.get("/")
